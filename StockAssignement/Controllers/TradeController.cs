@@ -40,6 +40,7 @@ public class TradeController : Controller
         }
         ViewBag.Errors = errors;
         ViewBag.Success = success;
+        ViewBag.Section = stockTrade.StockSymbol;
         return View(stockTrade);
     }
 
@@ -54,8 +55,7 @@ public class TradeController : Controller
         if (ModelState.IsValid)
         {
             SellOrderResponse sellOrderResponse =  await _stocksService.CreateSellOrder(sellOrderRequest);
-            string Success = "Sell Order is Successfully Processed";
-            return RedirectToAction("Index", "Trade", new { success = Success });
+            return RedirectToAction("Orders", "Trade");
         }
         List<string> Errors = ModelState.Values.SelectMany(v => v.Errors).Select(error => error.ErrorMessage).ToList();
         return RedirectToAction("Index", "Trade",new { errors = Errors });
@@ -73,8 +73,7 @@ public class TradeController : Controller
         if (ModelState.IsValid)
         {
             BuyOrderResponse buyOrderResponse = await _stocksService.CreateBuyOrder(buyOrderRequest);
-            string Success = "Buy Order is Successfully Processed";
-            return RedirectToAction("Index", "Trade", new { success = Success });
+            return RedirectToAction("Orders", "Trade");
         }
         List<string> Errors = ModelState.Values.SelectMany(v => v.Errors).Select(error => error.ErrorMessage).ToList();
         return RedirectToAction("Index", "Trade", new { errors = Errors });
@@ -84,8 +83,10 @@ public class TradeController : Controller
     {
         List<BuyOrderResponse> buyOrderResponses =  await _stocksService.GetBuyOrders();
         List<SellOrderResponse> sellOrderResponses = await _stocksService.GetSellOrders();
+        var a = sellOrderResponses.Count;
         ViewBag.BuyOrders = buyOrderResponses;
         ViewBag.SellOrders = sellOrderResponses;
+        ViewBag.Section = "Orders";
         return View();
     }
 }

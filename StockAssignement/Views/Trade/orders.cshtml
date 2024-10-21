@@ -3,37 +3,56 @@
     ViewBag.Title = "Orders";
 }
 
-<div class="flex flex-row">
-    <div class="flex flex-col">
-        <div>
-            <h3>Buy Orders</h3>
-        </div>
-        
-        @foreach (BuyOrderResponse orderResponse in ViewBag.BuyOrders)
-        {
-            <div class="flex flex-col">
-                <h4>@orderResponse.StockName (@orderResponse.StockSymbol)</h4>
-                <p>@orderResponse.Quantity shares at $@orderResponse.Price</p>
-                <p>Trade Ammount: $@(orderResponse.Price * orderResponse.Quantity)</p>
-                <p>@orderResponse.DateAndTimeOfOrder.ToString("dd MM yyyy hh:mm:ss tt")</p>
+<div class="flex flex-row justify-between space-x-10 mt-10">
+    <div class="flex flex-col w-1/2 ">
+        <div class="border-grayColor border-2 px-3 py-3 rounded-lg">
+            <div>
+                <h3 class="font-bold text-lg text-grayColor">Buy Orders</h3>
             </div>
-        }
-        
-    </div>
-    <div class="flex flex-col">
-        <div>
-            <h3>Sell Orders</h3>
-        </div>
 
-        @foreach (BuyOrderResponse orderResponse in ViewBag.SellOrders)
-        {
-            <div class="flex flex-col">
-                <h4>@orderResponse.StockName (@orderResponse.StockSymbol)</h4>
-                <p>@orderResponse.Quantity shares at $@orderResponse.Price</p>
-                <p>Trade Ammount: $@(orderResponse.Price * orderResponse.Quantity)</p>
-                <p>@orderResponse.DateAndTimeOfOrder.ToString("dd MM yyyy hh:mm:ss tt")</p>
+            @if (ViewBag.BuyOrders.Count > 0)
+            {
+                <div class="flex flex-col space-y-5">
+                    @foreach (BuyOrderResponse orderResponse in ViewBag.BuyOrders)
+                    {
+                        <div class="flex flex-col ">
+                            <h4 class="font-bold text-md">@orderResponse.StockName (@orderResponse.StockSymbol)</h4>
+                            <p>@orderResponse.Quantity <span class="text-grayColor">shares at</span> $@orderResponse.Price</p>
+                            <p class="font-bold"><span class="text-grayColor">Trade Ammount:</span> $@(orderResponse.Price * orderResponse.Quantity)</p>
+                            <p class="text-grayColor">@orderResponse.DateAndTimeOfOrder.ToString("dd MMMM yyyy hh:mm:ss tt")</p>
+                        </div>
+                        <hr class="border-black" />
+                    }
+                </div>
+            }
+
+        </div>
+       
+    </div>
+
+    <div class="flex flex-col w-1/2">
+        <div class="border-grayColor border-2 px-3 py-3 rounded-lg">
+            <div>
+                <h3 class="font-bold text-lg text-grayColor">Sell Orders</h3>
             </div>
-        }
+            @if (ViewBag.SellOrders.Count != 0)
+            {
+                <div class="flex flex-col space-y-5">
+                    @foreach (SellOrderResponse orderResponse in ViewBag.SellOrders)
+                    {
+                        <div class="flex flex-col ">
+                            <h4 class="font-bold text-md">@orderResponse.StockName (@orderResponse.StockSymbol)</h4>
+                            <p>@orderResponse.Quantity <span class="text-grayColor">shares at</span> $@orderResponse.Price</p>
+                            <p class="font-bold"><span class="text-grayColor">Trade Ammount:</span> $@(orderResponse.Price * orderResponse.Quantity)</p>
+                            <p class="text-grayColor">@orderResponse.DateAndTimeOfOrder.ToString("dd MM yyyy hh:mm:ss tt")</p>
+                        </div>
+                        <hr class="border-black" />
+                    }
+                </div>
+            }
+
+        </div>
+       
     </div>
 
 </div>
