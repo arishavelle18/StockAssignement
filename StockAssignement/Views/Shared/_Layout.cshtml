@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://kit.fontawesome.com/6ebef808d3.js" crossorigin="anonymous"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        semiWhiteColor: '#F0F0F0',
+                        grayColor: "#929292",
+                        grayishColor: "#8F8F8F",
+                        redColor: "#B93B14",
+                        greenColor: "#1F7E24"
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="container mx-auto">
+        <nav class="flex justify-between items-center">
+            <div>
+                <h1 class="text-4xl">
+                    <i class="fa-solid fa-money-bill"></i>
+                    Stocks
+                </h1>
+            </div>
+            <div class="text-xl">
+                <a href="#">Login</a>
+            </div>
+        </nav>
+        <div class="flex flex-col mt-10">
+            <ul class="flex flex-row items-center justify-start space-x-3">
+                <li><a href="~/trade/index" class="text-blue-500 hover:underline underline-offset-4 decoration-sky-700">Trade</a></li>
+                <li><a href="~/trade/orders" class="text-blue-500 hover:underline underline-offset-4 decoration-sky-700">Orders</a></li>
+            </ul>
+        </div>
+        @RenderBody()
+    </div>
+</body>
+</html>

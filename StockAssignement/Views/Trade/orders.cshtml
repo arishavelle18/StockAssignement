@@ -1,0 +1,39 @@
+﻿@using StockAssignment.ServiceContracts.DTO
+@{
+    ViewBag.Title = "Orders";
+}
+
+<div class="flex flex-row">
+    <div class="flex flex-col">
+        <div>
+            <h3>Buy Orders</h3>
+        </div>
+        
+        @foreach (BuyOrderResponse orderResponse in ViewBag.BuyOrders)
+        {
+            <div class="flex flex-col">
+                <h4>@orderResponse.StockName (@orderResponse.StockSymbol)</h4>
+                <p>@orderResponse.Quantity shares at $@orderResponse.Price</p>
+                <p>Trade Ammount: $@(orderResponse.Price * orderResponse.Quantity)</p>
+                <p>@orderResponse.DateAndTimeOfOrder.ToString("dd MM yyyy hh:mm:ss tt")</p>
+            </div>
+        }
+        
+    </div>
+    <div class="flex flex-col">
+        <div>
+            <h3>Sell Orders</h3>
+        </div>
+
+        @foreach (BuyOrderResponse orderResponse in ViewBag.SellOrders)
+        {
+            <div class="flex flex-col">
+                <h4>@orderResponse.StockName (@orderResponse.StockSymbol)</h4>
+                <p>@orderResponse.Quantity shares at $@orderResponse.Price</p>
+                <p>Trade Ammount: $@(orderResponse.Price * orderResponse.Quantity)</p>
+                <p>@orderResponse.DateAndTimeOfOrder.ToString("dd MM yyyy hh:mm:ss tt")</p>
+            </div>
+        }
+    </div>
+
+</div>
