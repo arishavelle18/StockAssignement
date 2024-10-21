@@ -1,25 +1,28 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace StockAssignment.ServiceContracts.Helpers;
-
-public class DateTimeValidation : ValidationAttribute
+namespace StockAssignment.ServiceContracts.Helpers
 {
-    private readonly DateTime _minDate;
-    private readonly DateTime _maxDate;
-
-    public DateTimeValidation(string minDate)
+    public class DateTimeValidation : ValidationAttribute
     {
-        _minDate = DateTime.Parse(minDate);
-        _maxDate = DateTime.Now;
-    }
+        private readonly DateTime _minDate;
+        private readonly DateTime _maxDate;
 
-    protected override ValidationResult IsValid(object? value, ValidationContext validationContext)
-    {
-        DateTime dateValue = (DateTime)value;
-        if(dateValue >= _maxDate || dateValue.Date <= _minDate)
+        public DateTimeValidation(string minDate)
         {
-            return new ValidationResult($"{dateValue.ToShortDateString()} {dateValue.ToShortTimeString()} Datetime must be between {_minDate.ToShortDateString()} and {_maxDate.ToShortDateString()} {_maxDate.ToShortTimeString()}");
+            _minDate = DateTime.Parse(minDate);
+            _maxDate = DateTime.Now;
         }
-        return ValidationResult.Success;
+
+        protected override ValidationResult IsValid(object? value, ValidationContext validationContext)
+        {
+            if (value is DateTime dateValue)
+            {
+                if (dateValue > _maxDate || dateValue < _minDate)
+                {
+                    return new ValidationResult($"{dateValue.ToShortDateString()} {dateValue.ToShortTimeString()} Datetime must be between {_minDate.ToShortDateString()} and {_maxDate.ToShortDateString()} {_maxDate.ToShortTimeString()}");
+                }
+            }
+            return ValidationResult.Success;
+        }
     }
 }

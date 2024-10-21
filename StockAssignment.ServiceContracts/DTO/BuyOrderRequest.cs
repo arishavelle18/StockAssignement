@@ -10,7 +10,7 @@ public class BuyOrderRequest
     public string? StockSymbol { get; set; }
     [Required(ErrorMessage = "Stock Name must required")]
     public string? StockName { get; set; }
-    [DateTimeValidation("2000-01-01")]
+    //[DateTimeValidation("2000-01-01")]
     public DateTime DateAndTimeOfOrder { get; set; }
     [Range(1u, 100000u,ErrorMessage ="Value must be between 1-100000.")]
     public UInt32 Quantity { get; set; }

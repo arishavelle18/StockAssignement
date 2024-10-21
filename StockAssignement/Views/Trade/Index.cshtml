@@ -43,7 +43,6 @@
                     <input type="hidden" name="Price" value="@Model.Price" />
                     <label for="Quantity">Quantity</label>
                     <input class="rounded-md border-0 px-2 py-2 w-52" type="number" min="0" placeholder="0.00" name="Quantity" id="Quantity" />
-                    <input type="hidden" value="@(DateTime.Now)" name="DateAndTimeOfOrder" id="DateAndTimeOfOrder" />
                 </div>
                 <div class="flex flex-row space-x-10 ">
                     <button class="bg-redColor text-white px-5 py-1 rounded-lg" formaction="~/trade/sellorder">Sell</button>

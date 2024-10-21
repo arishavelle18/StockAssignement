@@ -23,14 +23,21 @@ public class TradeController : Controller
         Dictionary<string, object>? getCompanyProfile = await _finnhubService.GetCompanyProfile("AAPL");
         Dictionary<string, object>? getQuotes = await _finnhubService.GetStockPriceQuote("AAPL");
 
-
-        StockTrade stockTrade = new StockTrade
+        StockTrade stockTrade = new StockTrade()
         {
-            StockName = getCompanyProfile["name"]?.ToString(),
-            StockSymbol = getCompanyProfile["ticker"]?.ToString(),
-            Price = Convert.ToDouble(getQuotes["c"]?.ToString()),
-            Quantity = 0
+            StockSymbol = "MSFT"
         };
+        if (getCompanyProfile != null && getQuotes != null)
+        {
+
+            stockTrade = new StockTrade
+            {
+                StockName = getCompanyProfile["name"]?.ToString(),
+                StockSymbol = getCompanyProfile["ticker"]?.ToString(),
+                Price = Convert.ToDouble(getQuotes["c"]?.ToString()),
+                Quantity = 0
+            };
+        }
         ViewBag.Errors = errors;
         ViewBag.Success = success;
         return View(stockTrade);
@@ -40,6 +47,10 @@ public class TradeController : Controller
     [HttpPost]
     public async Task<IActionResult> SellOrder(SellOrderRequest sellOrderRequest)
     {
+        sellOrderRequest.DateAndTimeOfOrder = DateTime.Now;
+        //reset the model if you are updating data
+        ModelState.Clear();
+        TryValidateModel(sellOrderRequest);
         if (ModelState.IsValid)
         {
             SellOrderResponse sellOrderResponse =  await _stocksService.CreateSellOrder(sellOrderRequest);
@@ -54,6 +65,11 @@ public class TradeController : Controller
     [HttpPost]
     public async Task<IActionResult> BuyOrder(BuyOrderRequest buyOrderRequest)
     {
+        buyOrderRequest.DateAndTimeOfOrder = DateTime.Now;
+        // reset the model if you are updating data
+        ModelState.Clear();
+        TryValidateModel(buyOrderRequest);
+
         if (ModelState.IsValid)
         {
             BuyOrderResponse buyOrderResponse = await _stocksService.CreateBuyOrder(buyOrderRequest);
